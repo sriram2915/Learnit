@@ -83,6 +83,14 @@ function CourseCard({ course, onNavigate, onEdit, onDelete }) {
         </div>
         <div className={styles.headerRow}>
           <h3 className={styles.title}>{title}</h3>
+          <button
+            className={styles.deleteBtn}
+            onClick={handleDelete}
+            title="Delete course"
+            aria-label="Delete course"
+          >
+            <FaTrash size={13} />
+          </button>
         </div>
         <p className={styles.description}>{description || "No description"}</p>
         <div className={styles.progress}>
