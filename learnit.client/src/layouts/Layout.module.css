@@ -1,0 +1,177 @@
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100vw;
+  background: var(--app-bg);
+  color: var(--text-strong);
+  font-size: 0.97rem;
+  position: relative;
+}
+
+.sidebarWrap {
+  /* Sidebar is now fixed, so this is just a spacer */
+  display: flex;
+  height: 100vh;
+  min-width: 0;
+  z-index: 2;
+}
+
+.mainArea {
+  flex: 1 1 0%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--app-bg);
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  /* margin-left is now set inline in Layout.jsx for dynamic adjustment */
+}
+/* Collapsed sidebar adjustment is now handled inline in Layout.jsx */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  padding: 1rem 2rem;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+  transition: background-color 0.3s ease;
+  min-height: 44px;
+}
+
+[data-theme="dark"] .topbar {
+  background: rgba(20, 24, 33, 0.97);
+  border-bottom-color: #1f2937;
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.62rem;
+  color: var(--text-soft);
+  line-height: 1.1;
+}
+
+.topTitle {
+  margin: 1px 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  line-height: 1.15;
+}
+
+.topSubtitle {
+  margin: 2px 0 0;
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  max-width: 540px;
+  line-height: 1.2;
+}
+
+.topRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.userChip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 8px 4px 4px;
+  border-radius: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  min-height: 32px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+
+  .userName {
+    display: block;
+    font-weight: 600;
+    font-size: 0.92rem;
+    line-height: 1.1;
+  }
+
+  .userRole {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-soft);
+    line-height: 1.1;
+  }
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.18);
+}
+
+.userName {
+  display: block;
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.1;
+}
+
+.userRole {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-soft);
+  line-height: 1.1;
+}
+
+.content {
+  padding: 1rem 0.5rem;
+  overflow-y: auto;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  background: var(--surface);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 32px;
+}
+
+@media (max-width: 1024px) {
+  .topbar {
+    padding: 10px 8px 6px;
+  }
+
+  .content {
+    padding: 8px;
+  }
+}

@@ -1,0 +1,391 @@
+.container {
+  padding: 18px 8px 24px 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 0;
+  border-bottom: none;
+  gap: 14px;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+}
+
+.title h1 {
+  margin: 0 0 4px;
+  font-size: 1.32rem;
+  font-weight: 700;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.badge {
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.badge.low {
+  background: rgba(16, 185, 129, 0.18);
+  color: #047857;
+}
+.badge.medium {
+  background: rgba(234, 179, 8, 0.18);
+  color: #b45309;
+}
+.badge.high {
+  background: rgba(239, 68, 68, 0.18);
+  color: #b91c1c;
+}
+.badge.beginner {
+  background: rgba(16, 185, 129, 0.18);
+  color: #047857;
+}
+.badge.intermediate {
+  background: rgba(234, 179, 8, 0.18);
+  color: #b45309;
+}
+.badge.advanced {
+  background: rgba(239, 68, 68, 0.18);
+  color: #b91c1c;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timer {
+  padding: 4px 8px;
+  background: rgba(0, 123, 255, 0.1);
+  border: 1px solid rgba(0, 123, 255, 0.2);
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 60px;
+  color: var(--muted);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 270px;
+  gap: 32px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 16px 18px 16px;
+  margin-bottom: 18px;
+}
+
+.playerShell {
+  border: none;
+  background: var(--background);
+  padding: 0;
+}
+
+.videoPlayer,
+.embedFrame,
+.youtubeWrapper {
+  width: 100%;
+  min-height: 180px;
+  border: none;
+  background: #000;
+}
+
+.sourceLink {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.subtle {
+  color: var(--muted);
+  margin: 0;
+}
+
+.syncHint {
+  color: var(--muted);
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.webWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.webToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.viewModeToggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.externalView {
+  padding: 8px;
+  text-align: center;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+
+.externalInfo h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+
+.externalInfo p {
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+
+.externalActions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.manualProgress {
+  margin-top: 8px;
+  padding: 8px;
+  background: var(--background-alt);
+  border-radius: 5px;
+  text-align: left;
+}
+
+.manualProgress h4 {
+  margin: 0 0 4px;
+  font-size: 0.98rem;
+}
+
+.manualProgress p {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.progressInput {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.progressInput input {
+  padding: 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  width: 60px;
+  font-size: 0.93rem;
+}
+
+.progressInput span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.progressActions {
+  display: flex;
+  gap: 8px;
+}
+
+.quickActions {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.section h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 7px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-strong);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.noteActions {
+  display: flex;
+  gap: 8px;
+  .actionBtn,
+  .externalActions button,
+  .progressActions button,
+  .noteActions button,
+  .quickActions button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-strong);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s, color 0.18s;
+  }
+  .actionBtn:hover,
+  .externalActions button:hover,
+  .progressActions button:hover,
+  .noteActions button:hover,
+  .quickActions button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(30, 175, 83, 0.08);
+  }
+}
+
+.notesEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notesEditor textarea {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  font-family: inherit;
+  font-size: 0.89rem;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.noteHint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.notePreview {
+  border: 1px solid var(--border);
+  background: var(--background);
+  padding: 6px;
+  line-height: 1.5;
+}
+
+.notePreview p {
+  margin-top: 0;
+}
+
+.notePreview :global(code) {
+  background: rgba(0, 0, 0, 0.04);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.notePreview :global(pre) {
+  background: rgba(0, 0, 0, 0.04);
+  padding: 12px;
+  overflow-x: auto;
+}
+
+.notesEmpty {
+  margin: 0;
+  color: var(--muted);
+}
+
+.sectionHeader h2 {
+  margin: 0;
+}
+
+.notes {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .title {
+    text-align: left;
+  }
+
+  .meta {
+    justify-content: flex-start;
+  }
+}
+
+.externalCourseInfo {
+  padding: 2rem;
+  text-align: center;
+  background: var(--background-alt, #f8f9fa);
+  border-radius: 8px;
+  border: 1px solid var(--border, #e0e0e0);
+}
+
+.externalCourseInfo h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: var(--text-primary, #333);
+}
+
+.externalCourseInfo p {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-secondary, #666);
+  line-height: 1.6;
+}

@@ -1,0 +1,499 @@
+/* ------------------ LAYOUT ------------------ */
+
+.page {
+  padding: 6px 2px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.2s ease;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: -0.18px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.refreshBtn {
+  border-radius: 6px;
+  font-weight: 600;
+  border: 1.5px solid var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.refreshBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.weekNav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.navBtn {
+  border-radius: 4px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-strong);
+  padding: 4px 8px;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.navBtn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.navBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.weekLabel {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  font-weight: 650;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.metricCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.metricCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent);
+}
+
+.chartsRowFull {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.chartTitle {
+  margin-bottom: 4px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.18px;
+}
+
+/* ------------------ METRICS ------------------ */
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 6px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.metric:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent);
+}
+
+.metricIcon {
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+.metricText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metricLabel {
+  font-size: 0.7rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.metricValue {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.18px;
+  color: var(--text-strong);
+}
+
+/* ------------------ SECTIONS ------------------ */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 8px 10px 7px 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.section:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.section h2 {
+  font-size: 0.98rem;
+  margin-bottom: 4px;
+  font-weight: 700;
+  letter-spacing: -0.18px;
+}
+
+.sectionHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.sectionHeaderRow h2 {
+  margin: 0;
+}
+
+/* ------------------ PROGRESS BAR ------------------ */
+.progressBarOuter {
+  width: 100%;
+  height: 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.progressBarInner {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.4, 2, 0.6, 1);
+  box-shadow: 0 1px 4px rgba(30, 175, 83, 0.2);
+  position: relative;
+}
+
+.progressBarInner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: progressShine 2s infinite;
+}
+
+@keyframes progressShine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.progressLabel {
+  margin-top: 1px;
+  font-size: 0.74rem;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+/* ------------------ CHART LAYOUT ------------------ */
+.chartsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 7px;
+}
+
+.chartBox {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 7px 7px 5px 7px;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.chartBox .sectionHeaderRow {
+  justify-content: center;
+}
+
+.chartBox .weekNav {
+  justify-content: center;
+}
+
+.chartBox:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ------------------ HEATMAP ------------------ */
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(18, 16px);
+  grid-auto-rows: 16px;
+  gap: 3px;
+  margin-top: 4px;
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  width: max-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-content: start;
+}
+
+.heatBox {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.heatBox:hover {
+  transform: scale(1.2);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 40%, transparent);
+  z-index: 1;
+  position: relative;
+}
+
+.heatLevel0 {
+  background: var(--border);
+  background: color-mix(in srgb, var(--surface) 70%, var(--border));
+}
+
+.heatLevel1 {
+  background: var(--accent);
+  background: color-mix(in srgb, var(--accent) 25%, var(--surface));
+}
+
+.heatLevel2 {
+  background: var(--accent);
+  background: color-mix(in srgb, var(--accent) 55%, var(--surface));
+}
+
+.heatLevel3 {
+  background: var(--accent);
+}
+
+.noDataBlock {
+  padding: 7px 0;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.noDataInline {
+  padding: 4px 0;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.heatmapLegend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-top: 3px;
+  font-size: 0.7rem;
+  color: var(--text-soft);
+}
+
+.legendBoxes {
+  display: flex;
+  gap: 1.5px;
+  align-items: center;
+}
+
+.legendBox {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+}
+
+.legendLabel {
+  font-size: 0.68rem;
+  color: var(--text-soft);
+}
+
+/* ------------------ COURSE PROGRESS ------------------ */
+.courseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 7px;
+}
+
+.courseCard {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 7px 7px 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.courseCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent);
+}
+
+.courseName {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: -0.18px;
+  color: var(--text-strong);
+}
+
+.courseProgressBarOuter {
+  width: 100%;
+  height: 6px;
+  background: var(--bg);
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.courseProgressBarInner {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  border-radius: 3px;
+  transition: width 0.4s cubic-bezier(0.4, 2, 0.6, 1);
+  box-shadow: 0 1px 4px rgba(30, 175, 83, 0.2);
+}
+
+.coursePercent {
+  font-size: 0.74rem;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+.aiRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.aiList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  padding-left: 16px;
+}
+
+.aiList li {
+  list-style: disc;
+}
+
+@media (max-width: 960px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+  .leftCol,
+  .rightCol {
+    flex-direction: column;
+    width: 100%;
+  }
+  .chartsRowFull {
+    grid-template-columns: 1fr;
+  }
+}

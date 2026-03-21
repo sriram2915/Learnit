@@ -1,0 +1,73 @@
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Learnit.Server.Data;
+using Learnit.Server.Models;
+using Learnit.Server.Services;
+using Microsoft.EntityFrameworkCore;
+using User = Learnit.Server.Models.User;
+
+namespace Learnit.Server.Controllers
+{
+    [ApiController]
+    [Route("api/auth")]
+    public class AuthController : ControllerBase
+    {
+        private readonly AppDbContext _db;
+        private readonly JwtService _jwt;
+        private readonly PasswordHasher<User> _hasher = new();
+
+        public AuthController(AppDbContext db, JwtService jwt)
+        {
+            _db = db;
+            _jwt = jwt;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserRegisterDto dto)
+        {
+            if (await _db.Users.AnyAsync(u => u.Email == dto.Email))
+                return BadRequest(new { message = "User already exists" });
+
+            var user = new User
+            {
+                FullName = dto.FullName,
+                Email = dto.Email
+            };
+
+            user.PasswordHash = _hasher.HashPassword(user, dto.Password);
+
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync();
+
+            return Ok(new { message = "Registered successfully" });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserLoginDto dto)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+
+            if (user == null)
+                return BadRequest(new { message = "Invalid credentials" });
+
+            var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+
+            if (result == PasswordVerificationResult.Failed)
+                return BadRequest(new { message = "Invalid credentials" });
+
+            var token = _jwt.Generate(user);
+
+            return Ok(new { token });
+        }
+
+        [HttpPost("logout")]
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        public IActionResult Logout()
+        {
+            // Since JWT is stateless, logout is handled client-side by removing the token
+            // This endpoint can be used for logging purposes or future token blacklisting
+            return Ok(new { message = "Logged out successfully" });
+        }
+    }
+}
+

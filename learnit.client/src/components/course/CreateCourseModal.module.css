@@ -1,0 +1,102 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--surface);
+  color: var(--text-strong);
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+}
+
+.aiPane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.aiPane textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text-strong);
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.aiPane select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text-strong);
+  font-family: inherit;
+  font-size: 1rem;
+}
+.aiPane input[type="number"],
+.aiPane select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text-strong);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+[data-theme="dark"] .form {
+  background: var(--surface);
+  color: var(--text-strong);
+  border-color: var(--border);
+}
+[data-theme="dark"] .aiPane textarea,
+[data-theme="dark"] .aiPane input[type="number"],
+[data-theme="dark"] .aiPane select {
+  background: var(--surface);
+  color: var(--text-strong);
+  border-color: var(--border);
+  box-shadow: none;
+}
+[data-theme="dark"] .aiPane textarea:focus,
+[data-theme="dark"] .aiPane input[type="number"]:focus,
+[data-theme="dark"] .aiPane select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.18);
+  background: var(--surface);
+  color: var(--text-strong);
+}
+
+[data-theme="dark"] .aiPane textarea,
+[data-theme="dark"] .aiPane input[type="number"],
+[data-theme="dark"] .aiPane select {
+  background: var(--surface);
+  color: var(--text-strong);
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .aiPane textarea:focus,
+[data-theme="dark"] .aiPane input[type="number"]:focus,
+[data-theme="dark"] .aiPane select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.2);
+  background: var(--surface);
+  color: var(--text-strong);
+}
+
+.aiPane ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.aiPane li {
+  margin: 0.25rem 0;
+  color: var(--muted);
+  font-size: 0.97rem;
+  line-height: 1.4;
+}

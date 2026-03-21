@@ -1,0 +1,434 @@
+/* Branding row for Learnit + Study hub + collapse button */
+.brandingRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  min-height: 48px;
+  margin-bottom: 8px;
+}
+
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 10px;
+  gap: 12px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s ease;
+  /* No box-shadow */
+  overflow: hidden;
+}
+
+/* Custom scrollbar styling */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-soft);
+}
+
+[data-theme="dark"] .sidebar::-webkit-scrollbar-thumb {
+  background: #1f2937;
+}
+
+[data-theme="dark"] .sidebar::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Firefox scrollbar */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+[data-theme="dark"] .sidebar {
+  scrollbar-color: #1f2937 transparent;
+}
+
+[data-theme="dark"] .sidebar {
+  background: rgba(20, 24, 33, 0.98);
+  border-right-color: #1f2937;
+}
+
+.collapsed {
+  width: 88px;
+  min-width: 88px;
+}
+
+.collapsed .sectionLabel,
+.collapsed .focusCard,
+.collapsed .label,
+.collapsed .brandTag {
+  display: none;
+}
+
+.brandingRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  min-height: 48px;
+  margin-bottom: 8px;
+}
+
+.toggleBtn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  /* No box-shadow */
+  z-index: 10;
+}
+
+.toggleBtn svg {
+  display: block;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+.branding {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  transition: all 0.3s ease;
+  min-width: 0;
+  margin-bottom: 2px;
+}
+
+.collapsed .branding {
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  padding: 12px 8px;
+  gap: 0;
+  width: 100%;
+}
+
+.collapsed .brandTitle {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.branding {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  transition: all 0.3s ease;
+  min-width: 0;
+  margin-bottom: 2px;
+}
+
+.collapsed .branding {
+  align-items: center;
+  padding: 12px 8px;
+}
+
+.brandTitle {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: green;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  background: none;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.collapsed .brandTitle {
+  font-size: 1.8rem;
+  text-align: center;
+  width: 100%;
+}
+
+.brandTag {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  white-space: nowrap;
+  display: block;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.sectionLabel {
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--text-soft);
+  margin: 0;
+  padding: 0 3px;
+  font-weight: 600;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 7px;
+  border-radius: 6px;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  font-weight: 500;
+  position: relative;
+}
+
+.menuItem:hover {
+  background: var(--bg);
+  color: var(--text-strong);
+}
+
+[data-theme="dark"] .menuItem:hover {
+  background: rgba(4, 120, 87, 0.1);
+  color: var(--accent);
+}
+
+.active {
+  background: var(--bg);
+  color: var(--text-strong);
+  font-weight: 600;
+  border-left: 3px solid var(--accent);
+  padding-left: 9px;
+}
+
+.active::before {
+  display: none;
+}
+
+.icon {
+  width: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.focusCard {
+  padding: 6px;
+  border-radius: 7px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.focusTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.focusLabel {
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.focusValue {
+  color: var(--text-strong);
+  font-weight: 800;
+}
+
+.focusSub {
+  color: var(--text-soft);
+}
+
+[data-theme="dark"] .focusCard {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.focusCard h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(148, 163, 184, 0.2);
+  overflow: hidden;
+  margin: 6px 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(30, 175, 83, 0.4);
+  transition: width 0.5s ease;
+}
+
+.errorText {
+  color: #d92c3a;
+}
+
+.sidebarBottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.focusCardWrap {
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.footerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 10;
+}
+
+.ghostBtn {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-strong);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.ghostBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(30, 175, 83, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 175, 83, 0.2);
+}
+
+.logoutBtn {
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  display: flex !important;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.8rem;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.18);
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.logoutBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+.logoutBtn:active {
+  transform: translateY(0);
+}
+
+.collapsed .branding div,
+.collapsed .sectionLabel,
+.collapsed .label {
+  display: none;
+}
+
+.collapsed .branding {
+  justify-content: center;
+}
+
+.collapsed .focusCard p,
+.collapsed .focusCard h3,
+.collapsed .focusCard small {
+  display: none;
+}
+
+.collapsed .focusCard {
+  padding: 12px 8px;
+}
+
+.collapsed .focusCard {
+  align-items: center;
+  text-align: center;
+}
+
+.collapsed .logoutBtn {
+  justify-content: center;
+}
+
+.collapsed .menuItem {
+  justify-content: center;
+}

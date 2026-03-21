@@ -1,0 +1,340 @@
+/* CourseCard hover and border radius improvements */
+.card {
+  border-radius: 12px !important;
+  transition: background 0.2s, border-color 0.2s;
+}
+.card:hover {
+  background: rgba(30, 175, 83, 0.04);
+  border-color: var(--accent);
+  cursor: pointer;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  flex: 1;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* Light mode: subtle differentiation from background */
+[data-theme="light"] .controls {
+  background: #fff;
+  box-shadow: none;
+  border: 1px solid #e2e8f0;
+}
+
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  border-radius: 6px;
+  transition: border-color 0.2s, background 0.2s;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .searchBox {
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.searchBox:hover {
+  border-color: rgba(30, 175, 83, 0.4);
+}
+
+.searchBox:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(30, 175, 83, 0.1),
+    0 4px 12px rgba(30, 175, 83, 0.15);
+  background: var(--surface);
+}
+
+[data-theme="dark"] .searchBox:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.2);
+  background: var(--surface);
+}
+
+.searchBox input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  color: var(--text-strong);
+  padding: 0 2px;
+}
+
+[data-theme="dark"] .searchBox input {
+  color: var(--text-strong);
+}
+
+.icon {
+  color: var(--muted);
+}
+
+.sortControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-soft);
+  font-size: 0.97rem;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.newButton {
+  white-space: nowrap;
+  padding: 8px 18px;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+.sortControls select {
+  border: 1.5px solid var(--border);
+  padding: 6px 10px;
+  background: var(--surface);
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text-strong);
+  border-radius: 6px;
+  transition: border-color 0.2s, background 0.2s;
+  box-shadow: none;
+}
+
+.sortControls select:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(30, 175, 83, 0.15);
+}
+
+.sortControls select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(30, 175, 83, 0.1);
+  background: var(--surface);
+  color: var(--text-strong);
+}
+
+[data-theme="dark"] .sortControls select {
+  background: var(--surface);
+  color: var(--text-strong);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .sortControls select:hover {
+  border-color: var(--accent);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .sortControls select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.2);
+  background: var(--surface);
+  color: var(--text-strong);
+}
+
+.count {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.filtersBar {
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 10px;
+  box-shadow: none;
+  position: sticky;
+  top: 12px;
+  min-width: 280px;
+}
+
+/* Light mode: subtle differentiation from background */
+[data-theme="light"] .filtersBar {
+  background: #ffffff;
+  box-shadow: none;
+  border: 1px solid #e2e8f0;
+}
+
+.filtersBar > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.filterGroups {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filterGroup p {
+  margin: 0;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip {
+  border: 1.5px solid var(--border);
+  padding: 5px 14px;
+  font-size: 0.89rem;
+  background: var(--surface);
+  color: var(--text-strong);
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 999px;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  box-shadow: none;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(30, 175, 83, 0.07);
+}
+
+.chipActive {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: none;
+}
+
+.chipActive:hover {
+  /* No pop or shadow on active hover */
+}
+
+.resetBtn {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-strong);
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  box-shadow: none;
+}
+
+.resetBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(30, 175, 83, 0.09);
+}
+
+.resetBtn:active {
+  /* No pop on active */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
+}
+
+.cardsSection {
+  min-height: 120px;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  border: 1.5px dashed var(--border);
+  padding: 22px 12px;
+  text-align: center;
+  color: var(--muted);
+  border-radius: 10px;
+  background: var(--surface);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.emptyState:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+@media (max-width: 960px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+
+  .cardsSection {
+    order: 1;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .controls {
+    flex-direction: column;
+  }
+
+  .searchBox {
+    min-width: 100%;
+  }
+}

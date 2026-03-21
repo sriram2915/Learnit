@@ -1,0 +1,137 @@
+﻿:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --muted: #475569;
+  --text-soft: #334155;
+  --border: #e2e8f0;
+  --text-strong: #020617;
+  --accent: #1eaf53;
+  --accent-dark: #129341;
+  --font-sans: "Inter", "Suisse Intl", system-ui, -apple-system, sans-serif;
+  --app-bg: #f8fafc;
+  --primary: #1eaf53;
+  --primary-dark: #129341;
+}
+
+/* Dark mode variables - Elegant matte theme with darker green accents */
+[data-theme="dark"] {
+  --bg: #0a0e1a;
+  --surface: #141821;
+  --muted: #9ca3af;
+  --text-soft: #d1d5db;
+  --border: #1f2937;
+  --text-strong: #f3f4f6;
+  --accent: #047857;
+  --accent-dark: #065f46;
+  --app-bg: #0a0e1a;
+  --primary: #047857;
+  --primary-dark: #065f46;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar styling for page */
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+  border: 2px solid var(--bg);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--text-soft);
+}
+
+[data-theme="dark"] html::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+[data-theme="dark"] html::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-color: var(--bg);
+}
+
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Firefox scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg);
+}
+
+[data-theme="dark"] html {
+  scrollbar-color: #1f2937 var(--bg);
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  background-color: var(--bg);
+  color: var(--text-strong);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+input,
+textarea,
+select {
+  color: var(--text-strong);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}

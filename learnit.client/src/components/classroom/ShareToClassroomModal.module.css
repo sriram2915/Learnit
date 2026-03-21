@@ -1,0 +1,165 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-height: 70vh;
+}
+
+.info {
+  padding: 0.5rem;
+  background: var(--bg-secondary, #f1f5f9);
+  border-radius: 5px;
+}
+
+.info p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-primary, #1e293b);
+}
+
+.hint {
+  margin-top: 0.5rem !important;
+  color: var(--text-secondary, #64748b) !important;
+  font-size: 0.875rem !important;
+}
+
+.error {
+  padding: 0.75rem;
+  background: var(--error-bg, #fee2e2);
+  color: var(--error-color, #dc2626);
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.classroomsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+}
+
+.classroomItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 2px solid var(--border-color, #e2e8f0);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.classroomItem:hover {
+  border-color: var(--primary-color, #2563eb);
+  background: var(--bg-secondary, #f1f5f9);
+}
+
+.classroomItem.selected {
+  border-color: var(--primary-color, #2563eb);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--border-color, #e2e8f0);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  transition: all 0.2s;
+}
+
+.classroomItem.selected .checkbox {
+  background: var(--primary-color, #2563eb);
+  border-color: var(--primary-color, #2563eb);
+  color: white;
+}
+
+.classroomInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.classroomInfo h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+}
+
+.classroomDescription {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #64748b);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.classroomMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary, #64748b);
+  flex-wrap: wrap;
+}
+
+.creatorBadge {
+  padding: 0.25rem 0.5rem;
+  background: var(--primary-color, #2563eb);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-secondary, #64748b);
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.emptyState p {
+  margin: 0.5rem 0;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--border-color, #e2e8f0);
+}
+
+/* Scrollbar styling */
+.classroomsList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.classroomsList::-webkit-scrollbar-track {
+  background: var(--bg-secondary, #f1f5f9);
+  border-radius: 4px;
+}
+
+.classroomsList::-webkit-scrollbar-thumb {
+  background: var(--border-color, #cbd5e1);
+  border-radius: 4px;
+}
+
+.classroomsList::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary, #94a3b8);
+}

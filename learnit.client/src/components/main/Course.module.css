@@ -1,0 +1,36 @@
+:root {
+  --course-bg: var(--auth-bg, var(--bg));
+  --course-surface: var(--auth-surface, var(--surface));
+  --course-ink: var(--auth-ink, var(--text-strong));
+  --course-muted: var(--auth-muted, var(--text-soft));
+  --course-border: var(--auth-border, var(--border));
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 24px);
+  padding: 0px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--course-bg);
+  color: var(--course-ink);
+  transition: background 0.2s, color 0.2s;
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: var(--spacing-4, 20px) var(--spacing-1, 6px);
+    gap: var(--spacing-3, 12px);
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: var(--spacing-2, 8px) 0;
+    gap: var(--spacing-2, 8px);
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

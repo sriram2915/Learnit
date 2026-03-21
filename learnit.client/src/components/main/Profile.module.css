@@ -1,0 +1,352 @@
+/* Deeply compacted, professional Profile.module.css */
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 3px 1px 6px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s ease;
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.7rem;
+  color: var(--text-soft);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 7px;
+}
+
+.card {
+  background: var(--surface);
+  flex: 1 1 auto;
+  min-width: 0;
+  border-radius: 3px;
+  padding: 10px 8px;
+  box-shadow: 0 6px 13px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+/* Light mode: subtle differentiation from background */
+[data-theme="light"] .card {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+}
+
+.cardHeader h2 {
+  margin: 4px 0 0;
+  font-size: 1.02rem;
+}
+
+.card label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.card form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card input,
+.card select {
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  padding: 7px 9px;
+  font-size: 0.89rem;
+  background: var(--surface);
+  color: var(--text-strong);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card input:focus,
+.card select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(4, 120, 87, 0.13);
+}
+
+.primaryBtn,
+.secondaryBtn,
+.dangerBtn {
+  border-radius: 3px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 0.93rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.primaryBtn {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 13px rgba(15, 23, 42, 0.12);
+  border-radius: 3px;
+}
+
+.primaryBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.16);
+}
+
+.primaryBtn:disabled {
+  background: var(--muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.secondaryBtn {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-strong);
+  border-radius: 3px;
+}
+
+.secondaryBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 4px 9px rgba(15, 23, 42, 0.08);
+}
+
+.dangerBtn {
+  background: #e11d48;
+  color: #fff;
+  align-self: flex-start;
+  box-shadow: 0 6px 12px rgba(241, 71, 97, 0.13);
+  border-radius: 3px;
+}
+
+.dangerBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(241, 71, 97, 0.18);
+}
+
+.actionsRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.toggleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.switch {
+  position: relative;
+  width: 38px;
+  height: 18px;
+  display: inline-block;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: var(--muted);
+  border-radius: 9px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.25s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  border-radius: 7px;
+  background: var(--surface);
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
+  transition: 0.25s;
+}
+
+input:checked + .slider {
+  background-color: var(--accent);
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+.rangeLabel input {
+  width: 100%;
+}
+
+.displayNote {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+.displayNote span {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* Tabs */
+/* Messages */
+.errorMessage {
+  padding: 7px 10px;
+  border: 1px solid #f43f5e;
+  background: #fef2f2;
+  color: #dc2626;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+[data-theme="dark"] .errorMessage {
+  border-color: #f43f5e;
+  background: rgba(244, 63, 94, 0.15);
+  color: #fca5a5;
+}
+
+.successMessage {
+  padding: 7px 10px;
+  border: 1px solid #22c55e;
+  background: #f0fdf4;
+  color: #16a34a;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+[data-theme="dark"] .successMessage {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+}
+
+.inlineForm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px;
+  align-items: center;
+  width: 100%;
+}
+
+.inlineForm input {
+  width: 100%;
+  min-width: 0;
+  background: var(--surface);
+  color: var(--text-strong);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 7px 9px;
+  font-size: 0.89rem;
+}
+
+.inlineForm input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(4, 120, 87, 0.13);
+}
+
+.inlineForm button {
+  white-space: nowrap;
+  font-size: 0.93rem;
+  padding: 7px 12px;
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.friendList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.friendItem {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 6px 7px;
+  background: var(--surface);
+}
+
+.muted {
+  color: var(--text-soft);
+}
+
+.linkBtn {
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Card Actions */
+.cardActions {
+  margin-top: 7px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inlineForm {
+    grid-template-columns: 1fr;
+  }
+
+  .inlineForm button {
+    width: 100%;
+    font-size: 0.93rem;
+    padding: 7px 12px;
+  }
+}
