@@ -237,6 +237,4 @@ npm run preview
   - `Groq__ApiKey` / `OpenAi__ApiKey`
 - Configure CORS `AllowedOrigins` with your deployed frontend URL.
 
----
 
-If you want, next I can add a short `SETUP.md` at repo root and a one-command bootstrap script for Windows (`setup.ps1`) to automate most of these steps.
