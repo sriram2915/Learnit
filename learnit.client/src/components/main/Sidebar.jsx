@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 import { useLogout } from "../../hooks/useLogout";
-import { progressApi } from "../../services";
+import { scheduleApi } from "../../services";
 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
@@ -21,30 +21,62 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const [weekStats, setWeekStats] = useState({ scheduled: 0, completed: 0 });
 
   useEffect(() => {
+    const computeWeeklyStatsFromEvents = (events) => {
+      const now = new Date();
+      const today = new Date(now);
+      const dayOfWeek = today.getDay();
+      const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+      const weekStart = new Date(today);
+      weekStart.setDate(today.getDate() - daysFromMonday);
+      weekStart.setHours(0, 0, 0, 0);
+
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 7);
+      weekEnd.setHours(23, 59, 59, 999);
+
+      let scheduled = 0;
+      let completed = 0;
+
+      (events || []).forEach((e) => {
+        if (!e?.courseModuleId) return;
+
+        const start = new Date(e.startUtc ?? e.start);
+        const end = e.endUtc || e.end
+          ? new Date(e.endUtc ?? e.end)
+          : new Date(start.getTime() + 60 * 60 * 1000);
+
+        if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return;
+
+        const eventEnd = end > start ? end : start;
+        if (eventEnd < weekStart || start > weekEnd) return;
+
+        const eventStartInWeek = start < weekStart ? weekStart : start;
+        const eventEndInWeek = eventEnd > weekEnd ? weekEnd : eventEnd;
+
+        const hours = Math.max(
+          0.25,
+          (eventEndInWeek - eventStartInWeek) / (1000 * 60 * 60)
+        );
+
+        scheduled += hours;
+        if (e?.courseModule?.isCompleted || eventEnd <= now) {
+          completed += hours;
+        }
+      });
+
+      return {
+        scheduled: Math.round(scheduled * 10) / 10,
+        completed: Math.round(completed * 10) / 10,
+      };
+    };
+
     const fetchWeekStats = async () => {
       try {
         setScheduleLoading(true);
         setScheduleError("");
-        const data = await progressApi.getProgressDashboard({
-          timezoneOffsetMinutes: new Date().getTimezoneOffset(),
-          weekOffset: 0,
-        });
-
-        const scheduled = Number(
-          data?.stats?.totalScheduledHours ??
-            data?.Stats?.TotalScheduledHours ??
-            0
-        );
-        const completed = Number(
-          data?.stats?.totalCompletedHours ??
-            data?.Stats?.TotalCompletedHours ??
-            0
-        );
-
-        setWeekStats({
-          scheduled: Math.round(scheduled * 10) / 10,
-          completed: Math.round(completed * 10) / 10,
-        });
+        const events = await scheduleApi.getScheduleEvents();
+        setWeekStats(computeWeeklyStatsFromEvents(events));
       } catch (err) {
         console.error("[Sidebar] Error fetching progress stats:", err);
         setScheduleError(err?.message || "Failed to load progress");
