@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Text.Json;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -53,6 +55,12 @@ namespace Learnit.Server.Services
 
             try
             {
+                if (LooksLikePdfUrl(url))
+                {
+                    var pdf = await TryGetPdfMetadataAsync(url, ct);
+                    if (pdf != null) return pdf;
+                }
+
                 if (IsYouTube(url))
                 {
                     // Check if it's a playlist first
@@ -168,6 +176,14 @@ namespace Learnit.Server.Services
 
         private static bool IsEdx(string url) =>
             url.Contains("edx.org", StringComparison.OrdinalIgnoreCase);
+
+        private static bool LooksLikePdfUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return false;
+            if (url.Contains(".pdf", StringComparison.OrdinalIgnoreCase)) return true;
+            if (url.Contains("arxiv.org/pdf/", StringComparison.OrdinalIgnoreCase)) return true;
+            return false;
+        }
 
         private async Task<UrlMetadata?> TryGetYouTubeMetadataAsync(string url, CancellationToken ct)
         {
@@ -1829,6 +1845,8 @@ namespace Learnit.Server.Services
                     {
                         Title = title ?? "",
                         Description = desc ?? "",
+                        Author = ExtractMetaTag(html, "author") ?? ExtractMetaTag(html, "article:author") ?? "",
+                        ThumbnailUrl = ExtractMetaTag(html, "og:image") ?? ExtractMetaTag(html, "twitter:image"),
                         Platform = "Documentation",
                         Headings = tocSections.Select(s => s.Title).ToList(),
                         Sections = tocSections,
@@ -1836,12 +1854,17 @@ namespace Learnit.Server.Services
                     };
                 }
 
+                var sections = ExtractArticleSections(html, maxCount: 16, defaultMinutes: 8);
+
                 return new UrlMetadata
                 {
                     Title = title ?? "",
                     Description = desc ?? "",
+                    Author = ExtractMetaTag(html, "author") ?? ExtractMetaTag(html, "article:author") ?? "",
+                    ThumbnailUrl = ExtractMetaTag(html, "og:image") ?? ExtractMetaTag(html, "twitter:image"),
                     Platform = "Documentation",
                     Headings = headings,
+                    Sections = sections,
                     EstimatedReadingMinutes = EstimateReadingTime(html)
                 };
             }
@@ -2066,6 +2089,13 @@ namespace Learnit.Server.Services
             {
                 using var resp = await _http.GetAsync(url, ct);
                 if (!resp.IsSuccessStatusCode) return null;
+
+                var mediaType = resp.Content.Headers.ContentType?.MediaType ?? string.Empty;
+                if (mediaType.Contains("pdf", StringComparison.OrdinalIgnoreCase))
+                {
+                    return await TryGetPdfMetadataAsync(url, ct);
+                }
+
                 var html = await resp.Content.ReadAsStringAsync(ct);
 
                 // Try Open Graph and standard meta tags first
@@ -2084,6 +2114,7 @@ namespace Learnit.Server.Services
                     ?? ExtractMetaTag(html, "twitter:image");
 
                 var headings = ExtractHeadings(html, maxCount: 5);
+                var sections = ExtractArticleSections(html, maxCount: 12, defaultMinutes: 10);
                 var readingTime = EstimateReadingTime(html);
 
                 if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(desc) && headings.Count == 0)
@@ -2096,6 +2127,7 @@ namespace Learnit.Server.Services
                     Author = author ?? "",
                     Platform = "Website",
                     Headings = headings,
+                    Sections = sections,
                     EstimatedReadingMinutes = readingTime,
                     ThumbnailUrl = thumbnail
                 };
@@ -2128,6 +2160,144 @@ namespace Learnit.Server.Services
         }
 
         // Helper methods
+
+        private async Task<UrlMetadata?> TryGetPdfMetadataAsync(string url, CancellationToken ct)
+        {
+            try
+            {
+                using var resp = await _http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, ct);
+                if (!resp.IsSuccessStatusCode)
+                    return null;
+
+                var mediaType = resp.Content.Headers.ContentType?.MediaType ?? string.Empty;
+                var likelyPdf = mediaType.Contains("pdf", StringComparison.OrdinalIgnoreCase)
+                    || LooksLikePdfUrl(url);
+                if (!likelyPdf)
+                    return null;
+
+                await using var stream = await resp.Content.ReadAsStreamAsync(ct);
+                var bytes = await ReadUpToBytesAsync(stream, 2_000_000, ct);
+                if (bytes.Length < 4)
+                    return null;
+
+                var header = Encoding.ASCII.GetString(bytes.Take(4).ToArray());
+                if (!header.StartsWith("%PDF", StringComparison.Ordinal))
+                    return null;
+
+                var contentText = Encoding.Latin1.GetString(bytes);
+                var extractedTitle = ExtractPdfInfoToken(contentText, "Title");
+                var extractedAuthor = ExtractPdfInfoToken(contentText, "Author");
+
+                var pageCount = Regex.Matches(contentText, @"/Type\s*/Page\b", RegexOptions.IgnoreCase).Count;
+                if (pageCount <= 0) pageCount = 8;
+
+                var filename = Uri.TryCreate(url, UriKind.Absolute, out var uri)
+                    ? Path.GetFileName(uri.LocalPath)
+                    : "Document.pdf";
+                filename = System.Net.WebUtility.UrlDecode(filename ?? "Document.pdf");
+                if (string.IsNullOrWhiteSpace(filename)) filename = "Document.pdf";
+
+                var title = !string.IsNullOrWhiteSpace(extractedTitle)
+                    ? extractedTitle
+                    : Regex.Replace(filename, @"\.pdf$", "", RegexOptions.IgnoreCase);
+
+                var headings = BuildPdfHeadingCandidates(contentText, maxCount: 10);
+                var sections = headings.Any()
+                    ? headings.Select(h => new ContentSection { Title = h, EstimatedMinutes = 12 }).ToList()
+                    : Enumerable.Range(1, Math.Min(10, Math.Max(3, pageCount / 2)))
+                        .Select(i => new ContentSection { Title = $"Section {i}", EstimatedMinutes = 12 })
+                        .ToList();
+
+                var estimatedMinutes = Math.Max(10, Math.Min(240, pageCount * 3));
+
+                return new UrlMetadata
+                {
+                    Title = title,
+                    Description = $"PDF document ({pageCount} pages)",
+                    Author = extractedAuthor ?? string.Empty,
+                    Platform = "PDF",
+                    Headings = headings.Any() ? headings : sections.Select(s => s.Title).ToList(),
+                    Sections = sections,
+                    EstimatedReadingMinutes = estimatedMinutes,
+                    DurationMinutes = estimatedMinutes
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[PDF Metadata] Error ({ex.GetType().Name}): {ex.Message}");
+                return null;
+            }
+        }
+
+        private static async Task<byte[]> ReadUpToBytesAsync(Stream stream, int maxBytes, CancellationToken ct)
+        {
+            using var ms = new MemoryStream(capacity: Math.Min(maxBytes, 256_000));
+            var buffer = new byte[8192];
+            int total = 0;
+            while (total < maxBytes)
+            {
+                var toRead = Math.Min(buffer.Length, maxBytes - total);
+                var read = await stream.ReadAsync(buffer.AsMemory(0, toRead), ct);
+                if (read <= 0) break;
+                ms.Write(buffer, 0, read);
+                total += read;
+            }
+            return ms.ToArray();
+        }
+
+        private static string? ExtractPdfInfoToken(string content, string key)
+        {
+            var match = Regex.Match(content, $@"/{Regex.Escape(key)}\s*\((.*?)\)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            if (!match.Success || match.Groups.Count < 2)
+                return null;
+
+            var value = match.Groups[1].Value;
+            value = value.Replace("\\(", "(").Replace("\\)", ")").Replace("\\n", " ").Replace("\\r", " ");
+            value = Regex.Replace(value, @"\s+", " ").Trim();
+            return string.IsNullOrWhiteSpace(value) ? null : value;
+        }
+
+        private static List<string> BuildPdfHeadingCandidates(string content, int maxCount)
+        {
+            var lines = Regex.Split(content, @"\r?\n");
+            var headingCandidates = new List<string>();
+
+            foreach (var rawLine in lines)
+            {
+                if (headingCandidates.Count >= maxCount) break;
+                var line = Regex.Replace(rawLine, @"\s+", " ").Trim();
+                if (line.Length < 8 || line.Length > 120) continue;
+                if (!Regex.IsMatch(line, @"[A-Za-z]{3,}")) continue;
+                if (line.Contains("obj") || line.Contains("endobj") || line.Contains("stream")) continue;
+
+                if (Regex.IsMatch(line, @"^(\d+(\.\d+){0,2}|[IVXLC]+\.)\s+", RegexOptions.IgnoreCase) ||
+                    Regex.IsMatch(line, @"^(abstract|introduction|background|method|methods|results|discussion|conclusion|references)\b", RegexOptions.IgnoreCase))
+                {
+                    headingCandidates.Add(System.Net.WebUtility.HtmlDecode(line));
+                }
+            }
+
+            return headingCandidates
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .Take(maxCount)
+                .ToList();
+        }
+
+        private static List<ContentSection> ExtractArticleSections(string html, int maxCount, int defaultMinutes)
+        {
+            var headings = ExtractHeadings(html, maxCount: maxCount);
+            if (!headings.Any())
+                return new List<ContentSection>();
+
+            return headings
+                .Select(h => new ContentSection
+                {
+                    Title = h,
+                    EstimatedMinutes = defaultMinutes
+                })
+                .ToList();
+        }
+
         private static string? ExtractMetaTag(string html, string propertyName)
         {
             var patterns = new[]
@@ -2169,14 +2339,14 @@ namespace Learnit.Server.Services
 
         private static List<string> ExtractHeadings(string html, int maxCount = 5)
         {
-            var headings = Regex.Matches(html, "<h[1-3][^>]*>(.*?)</h[1-3]>", RegexOptions.IgnoreCase | RegexOptions.Singleline)
+            return Regex.Matches(html, "<h[1-4][^>]*>(.*?)</h[1-4]>", RegexOptions.IgnoreCase | RegexOptions.Singleline)
                 .Cast<Match>()
-                .Select(m => System.Net.WebUtility.HtmlDecode(Regex.Replace(m.Groups[1].Value, "<.*?>", "").Trim()))
-                .Where(h => !string.IsNullOrWhiteSpace(h) && h.Length < 150)
+                .Select(m => Regex.Replace(m.Groups[1].Value, "<.*?>", " "))
+                .Select(s => System.Net.WebUtility.HtmlDecode(Regex.Replace(s, @"\s+", " ").Trim()))
+                .Where(h => !string.IsNullOrWhiteSpace(h) && h.Length is >= 3 and <= 180)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
                 .Take(maxCount)
                 .ToList();
-
-            return headings;
         }
 
         private static List<ContentSection> ExtractTableOfContents(string html)
